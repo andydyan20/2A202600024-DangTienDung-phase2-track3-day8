@@ -9,6 +9,7 @@ from typing import Annotated
 import typer
 import yaml
 
+from .extensions import run_all_extensions
 from .graph import build_graph
 from .metrics import MetricsReport, metric_from_state, summarize_metrics, write_metrics
 from .persistence import build_checkpointer
@@ -51,6 +52,22 @@ def validate_metrics(metrics: Annotated[Path, typer.Option("--metrics")]) -> Non
     if report.total_scenarios < 6:
         raise typer.BadParameter("Expected at least 6 scenarios")
     typer.echo(f"Metrics valid. success_rate={report.success_rate:.2%}")
+
+
+@app.command("extensions")
+def run_extensions(
+    config: Annotated[Path, typer.Option("--config")] = Path("configs/lab.yaml"),
+) -> None:
+    """Run all bonus extension demos and write results JSON."""
+    cfg = yaml.safe_load(config.read_text(encoding="utf-8"))
+    results = run_all_extensions(cfg.get("scenarios_path", "data/sample/scenarios.jsonl"))
+    output_path = Path("outputs/extensions.json")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(
+        json.dumps(results, indent=2, ensure_ascii=False, default=str),
+        encoding="utf-8",
+    )
+    typer.echo(f"Extensions complete. Results → {output_path}")
 
 
 if __name__ == "__main__":

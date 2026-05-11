@@ -1,0 +1,81 @@
+{
+  "crash_resume": {
+    "thread_id": "crash-resume-S05_error",
+    "scenario_id": "S05_error",
+    "backend": "memory",
+    "initial_run_complete": true,
+    "route": "error",
+    "state_recoverable": true,
+    "recovered_route": "error",
+    "events_in_state": 10,
+    "crash_resume_supported": true,
+    "latency_ms": 279
+  },
+  "time_travel": {
+    "scenario_id": "S02_tool",
+    "history_snapshots": 8,
+    "history": [
+      {
+        "step": 0,
+        "next_nodes": [],
+        "checkpoint_id": "1f14cf1d"
+      },
+      {
+        "step": 1,
+        "next_nodes": [
+          "finalize"
+        ],
+        "checkpoint_id": "1f14cf1d"
+      },
+      {
+        "step": 2,
+        "next_nodes": [
+          "answer"
+        ],
+        "checkpoint_id": "1f14cf1d"
+      },
+      {
+        "step": 3,
+        "next_nodes": [
+          "evaluate"
+        ],
+        "checkpoint_id": "1f14cf1d"
+      },
+      {
+        "step": 4,
+        "next_nodes": [
+          "tool"
+        ],
+        "checkpoint_id": "1f14cf1d"
+      }
+    ],
+    "replay": {
+      "replayed": true,
+      "replayed_route": "tool",
+      "replayed_answer": "I found the information: {'status': 'success', 'data': 'mock-result for scenario=S02_tool attempt=0', 'idempotency_key': 'S02_tool:0'}",
+      "matches_original": true
+    },
+    "latency_ms": 8
+  },
+  "parallel_fan_out": {
+    "pattern": "parallel-fan-out-via-Send",
+    "items_dispatched": 3,
+    "items": [
+      "order-12345",
+      "order-67890",
+      "order-11121"
+    ],
+    "results": [
+      "worker-0: processed 'order-12345'",
+      "worker-1: processed 'order-67890'",
+      "worker-2: processed 'order-11121'"
+    ],
+    "merged": "worker-0: processed 'order-12345' | worker-1: processed 'order-67890' | worker-2: processed 'order-11121'",
+    "latency_ms": 0
+  },
+  "mermaid_diagram": {
+    "path": "outputs/graph_diagram.md",
+    "generated": true,
+    "latency_ms": 0
+  }
+}
