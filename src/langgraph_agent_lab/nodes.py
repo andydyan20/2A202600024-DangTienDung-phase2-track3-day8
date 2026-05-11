@@ -66,7 +66,10 @@ def classify_node(state: AgentState) -> dict:
     risk_level = "low"
 
     # ── RISKY (highest priority: destructive/financial actions) ──
-    risky_kw = {"refund", "delete", "cancel", "remove", "revoke", "terminate", "erase", "destroy"}
+    risky_kw = {
+        "refund", "delete", "cancel", "remove", "revoke",
+        "terminate", "erase", "destroy", "send",
+    }
     if risky_kw & set(clean_words):
         route = Route.RISKY
         risk_level = "high"

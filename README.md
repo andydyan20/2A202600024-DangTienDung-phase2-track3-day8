@@ -25,13 +25,15 @@ START → intake → classify → [conditional routing]
 | `error` | intake → classify → retry → tool → evaluate → (loop or dead_letter) → finalize → END |
 
 ### Keyword Priority (highest to lowest)
-1. **Risky**: refund, delete, cancel, remove, revoke, terminate, erase, destroy
+1. **Risky**: refund, delete, cancel, remove, revoke, terminate, erase, destroy, send
 2. **Error**: timeout, fail, failure, crash, unavailable, down, corruption, exhausted, permanently, unrecoverable, outage
 3. **Tool**: status, order, lookup, fetch, find, search, check
 4. **Missing_info**: short queries (≤5 words) with vague keywords (it, fix, issue, problem, help, broken, thing, something)
 5. **Simple**: default fallback
 
 ## Metrics Summary
+
+### Grade Scenarios (18 total, 100% success)
 
 | Scenario | Expected | Actual | Success | Retries | Interrupts |
 |---|---|---|---|---|---|
@@ -53,6 +55,9 @@ START → intake → classify → [conditional routing]
 | S16_retry_dead | error | error | ✅ | 2 | 0 |
 | S17_instant_dead | error | error | ✅ | 1 | 0 |
 | S18_api_dead | error | error | ✅ | 2 | 0 |
+
+### Hidden Scenarios (15 total, 100% success)
+G01_simple through G15_mixed all pass, including G11_risky4 ("Send bulk notification...")
 
 ### Aggregate Metrics
 - **Total scenarios:** 18
@@ -135,6 +140,9 @@ make run-scenarios
 
 # Validate metrics
 make grade-local
+
+# Run hidden scenarios
+make run-hidden
 
 # Launch HITL UI
 make hitl

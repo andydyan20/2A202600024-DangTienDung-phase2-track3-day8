@@ -1,4 +1,4 @@
-.PHONY: install test lint typecheck run-scenarios grade-local run-extensions run-custom hitl clean
+.PHONY: install test lint typecheck run-scenarios grade-local run-extensions run-custom run-hidden hitl clean
 
 install:
 	pip install -e '.[dev]'
@@ -23,6 +23,9 @@ run-extensions:
 
 run-custom:
 	python -m langgraph_agent_lab.cli run-custom --scenarios data/custom/scenarios.jsonl
+
+run-hidden:
+	python -m langgraph_agent_lab.cli run-scenarios --config configs/lab_hidden.yaml --output outputs/hidden_metrics.json
 
 hitl:
 	python -m langgraph_agent_lab.cli hitl
