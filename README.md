@@ -57,14 +57,39 @@ START → intake → classify → [conditional routing]
 | S18_api_dead | error | error | ✅ | 2 | 0 |
 
 ### Hidden Scenarios (15 total, 100% success)
-G01_simple through G15_mixed all pass, including G11_risky4 ("Send bulk notification...")
+
+| Scenario | Query | Expected | Actual | Success | Retries | Interrupts |
+|---|---|---|---|---|---|---|
+| G01_simple | What are your business hours? | simple | simple | ✅ | 0 | 0 |
+| G02_simple2 | What is your return policy? | simple | simple | ✅ | 0 | 0 |
+| G03_tool | Track my shipment for order 7890 | tool | tool | ✅ | 0 | 0 |
+| G04_tool2 | Search for invoice number INV-2024-001 | tool | tool | ✅ | 0 | 0 |
+| G05_tool3 | Find all pending tickets for account A-555 | tool | tool | ✅ | 0 | 0 |
+| G06_missing | Please handle it | missing_info | missing_info | ✅ | 0 | 0 |
+| G07_missing2 | Fix it now | missing_info | missing_info | ✅ | 0 | 0 |
+| G08_risky | Cancel all pending orders for this customer | risky | risky | ✅ | 0 | 1 |
+| G09_risky2 | Remove user profile and all associated data | risky | risky | ✅ | 0 | 1 |
+| G10_risky3 | Revoke API access tokens for team workspace | risky | risky | ✅ | 0 | 1 |
+| G11_risky4 | Send bulk notification to all premium users | risky | risky | ✅ | 0 | 1 |
+| G12_error | Service unavailable when connecting to payment gateway | error | error | ✅ | 2 | 0 |
+| G13_error2 | Request failed with internal server error | error | error | ✅ | 2 | 0 |
+| G14_dead | Critical crash in authentication module unrecoverable | error | error | ✅ | 1 | 0 |
+| G15_mixed | Check refund status for order 456 | risky | risky | ✅ | 0 | 1 |
 
 ### Aggregate Metrics
-- **Total scenarios:** 18
-- **Success rate:** 100%
-- **Average nodes visited:** 6.83
-- **Total retries:** 13
-- **Total interrupts:** 4 (HITL approval events)
+**Grade Scenarios (18):**
+- Total scenarios: 18
+- Success rate: 100%
+- Average nodes visited: 6.83
+- Total retries: 13
+- Total interrupts: 4 (HITL approval events)
+
+**Hidden Scenarios (15):**
+- Total scenarios: 15
+- Success rate: 100%
+- Average nodes visited: 6.6
+- Total retries: 5
+- Total interrupts: 5
 
 ## Failure Analysis
 
