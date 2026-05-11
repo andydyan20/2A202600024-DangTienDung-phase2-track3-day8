@@ -6,8 +6,6 @@ that check schema/metrics can run even if students are still debugging graph wir
 
 from __future__ import annotations
 
-from typing import Any
-
 from .nodes import (
     answer_node,
     approval_node,
@@ -21,26 +19,40 @@ from .nodes import (
     risky_action_node,
     tool_node,
 )
-from .routing import route_after_approval, route_after_classify, route_after_evaluate, route_after_retry
+from .routing import (
+    route_after_approval,
+    route_after_classify,
+    route_after_evaluate,
+    route_after_retry,
+)
 from .state import AgentState
 
 
-def build_graph(checkpointer: Any | None = None):
+def build_graph(checkpointer: object = None) -> object:
     """Build and compile the LangGraph workflow.
 
-    TODO(student): review the architecture and modify nodes/edges only with a clear reason.
-    Required behaviors:
-    - intake -> classify (normalization + routing)
-    - classify routes to answer/tool/clarify/risky/retry
-    - tool -> evaluate creates the retry loop (slide: "done?" check)
-    - risky path requires approval before tool/action
-    - retry loop bounded by max_attempts -> dead_letter on exhaustion
-    - all paths eventually reach finalize -> END
+    Graph architecture (11 nodes, 4 conditional edges):
+
+        START -> intake -> classify -> [conditional: route_after_classify]
+          ├── simple       -> answer -> finalize -> END
+          ├── tool         -> tool -> evaluate -> [conditional: route_after_evaluate]
+          │                  ├── success -> answer -> finalize -> END
+          │                  └── retry  -> retry -> [conditional: route_after_retry]
+          │                    ├── tool (loop, if attempt < max_attempts)
+          │                    └── dead_letter -> finalize -> END
+          ├── missing_info -> clarify -> finalize -> END
+          ├── risky        -> risky_action -> approval -> [conditional: route_after_approval]
+          │                  ├── approve -> tool -> evaluate -> ...
+          │                  ├── reject  -> clarify -> finalize -> END
+          │                  └── edit    -> risky_action (re-evaluate)
+          └── error        -> retry -> tool -> evaluate -> ... (loop or dead_letter)
+
+    All paths terminate at finalize -> END. The retry loop is bounded by max_attempts.
     """
     try:
         from langgraph.graph import END, START, StateGraph
     except Exception as exc:  # pragma: no cover - helpful install error
-        raise RuntimeError("LangGraph is required. Run: pip install -e '.[dev]' or pip install langgraph") from exc
+        raise RuntimeError("LangGraph is required. Run: pip install -e '.[dev]'") from exc
 
     graph = StateGraph(AgentState)
     graph.add_node("intake", intake_node)

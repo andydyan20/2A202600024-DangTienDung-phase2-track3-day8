@@ -5,3 +5,14 @@
 {"id":"S05_error","query":"Timeout failure while processing request","expected_route":"error","requires_approval":false,"should_retry":true,"tags":["retry"]}
 {"id":"S06_delete","query":"Delete customer account after support verification","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["hitl","destructive"]}
 {"id":"S07_dead_letter","query":"System failure cannot recover after multiple attempts","expected_route":"error","requires_approval":false,"should_retry":true,"max_attempts":1,"tags":["dead_letter","retry"]}
+{"id":"S08_pii","query":"My email is test@example.com — how do I export data?","expected_route":"simple","requires_approval":false,"should_retry":false,"tags":["simple","pii"]}
+{"id":"S09_urgent","query":"URGENT: Cannot login, need immediate help ASAP!!!","expected_route":"simple","requires_approval":false,"should_retry":false,"tags":["simple","urgent"]}
+{"id":"S10_bulk_order","query":"Lookup status for orders 12345, 67890, and 11121 please","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["tool","bulk"]}
+{"id":"S11_cancel","query":"Cancel my premium subscription and refund the last payment","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["hitl","risky","cancellation"]}
+{"id":"S12_persistent_error","query":"Database timeout while processing batch job","expected_route":"error","requires_approval":false,"should_retry":true,"max_attempts":5,"tags":["retry","extended"]}
+{"id":"S13_vague_missing","query":"Something is broken","expected_route":"missing_info","requires_approval":false,"should_retry":false,"tags":["clarification","vague"]}
+{"id":"S14_delete_data","query":"Delete all my stored payment methods and transaction history","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["hitl","destructive","data-deletion"]}
+{"id":"S15_service_down","query":"The payment service is completely down, all transactions are failing","expected_route":"error","requires_approval":false,"should_retry":true,"tags":["retry","outage"]}
+{"id":"S16_retry_dead","query":"Critical database corruption detected on primary shard","expected_route":"error","requires_approval":false,"should_retry":true,"max_attempts":2,"tags":["dead_letter","retry","corruption"]}
+{"id":"S17_instant_dead","query":"Authentication service permanently unavailable after crash","expected_route":"error","requires_approval":false,"should_retry":true,"max_attempts":1,"tags":["dead_letter","retry","auth-failure"]}
+{"id":"S18_api_dead","query":"Third-party API rate limit exhausted with no fallback endpoint","expected_route":"error","requires_approval":false,"should_retry":true,"max_attempts":2,"tags":["dead_letter","retry","rate-limit"]}

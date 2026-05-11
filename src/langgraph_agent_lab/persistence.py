@@ -8,8 +8,9 @@ from typing import Any
 def build_checkpointer(kind: str = "memory", database_url: str | None = None) -> Any | None:
     """Return a LangGraph checkpointer.
 
-    TODO(student): add SQLite/Postgres support for the extension track.
+    Supported kinds: none, memory, sqlite, postgres.
     The starter uses MemorySaver so the lab can run without infrastructure.
+    SQLite/Postgres require optional dependencies (langgraph-checkpoint-*).
     """
     if kind == "none":
         return None

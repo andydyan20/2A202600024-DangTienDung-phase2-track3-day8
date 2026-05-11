@@ -41,8 +41,15 @@ class ApprovalDecision(BaseModel):
 class AgentState(TypedDict, total=False):
     """LangGraph state.
 
-    TODO(student): decide which fields should be append-only and which should be overwritten.
-    The current annotations give a safe starting point for auditability.
+    ── Field design decisions ─────────────────────────────────────────
+    Append-only (Annotated[list, add]): messages, tool_results, errors, events
+      Rationale: every step's output is preserved for audit trails, metrics
+      computation, and grading. The add reducer ensures ordering is kept.
+
+    Overwrite (plain type): route, risk_level, attempt, evaluation_result,
+      approval, final_answer, pending_question, proposed_action
+      Rationale: only the latest value matters for routing decisions and
+      final output. Keeping these as overwrite avoids stale-state bugs.
     """
 
     thread_id: str
