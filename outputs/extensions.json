@@ -9,7 +9,7 @@
     "recovered_route": "error",
     "events_in_state": 10,
     "crash_resume_supported": true,
-    "latency_ms": 279
+    "latency_ms": 262
   },
   "time_travel": {
     "scenario_id": "S02_tool",
@@ -18,35 +18,35 @@
       {
         "step": 0,
         "next_nodes": [],
-        "checkpoint_id": "1f14cf1d"
+        "checkpoint_id": "1f14cf89"
       },
       {
         "step": 1,
         "next_nodes": [
           "finalize"
         ],
-        "checkpoint_id": "1f14cf1d"
+        "checkpoint_id": "1f14cf89"
       },
       {
         "step": 2,
         "next_nodes": [
           "answer"
         ],
-        "checkpoint_id": "1f14cf1d"
+        "checkpoint_id": "1f14cf89"
       },
       {
         "step": 3,
         "next_nodes": [
           "evaluate"
         ],
-        "checkpoint_id": "1f14cf1d"
+        "checkpoint_id": "1f14cf89"
       },
       {
         "step": 4,
         "next_nodes": [
           "tool"
         ],
-        "checkpoint_id": "1f14cf1d"
+        "checkpoint_id": "1f14cf89"
       }
     ],
     "replay": {

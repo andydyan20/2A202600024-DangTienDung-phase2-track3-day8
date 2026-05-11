@@ -58,6 +58,7 @@ class AgentState(TypedDict, total=False):
     route: str
     risk_level: str
     attempt: int
+    should_retry: bool
     max_attempts: int
     final_answer: str | None
     pending_question: str | None
@@ -97,6 +98,7 @@ def initial_state(scenario: Scenario) -> AgentState:
         "risk_level": "unknown",
         "attempt": 0,
         "max_attempts": scenario.max_attempts,
+        "should_retry": scenario.should_retry,
         "final_answer": None,
         "pending_question": None,
         "proposed_action": None,

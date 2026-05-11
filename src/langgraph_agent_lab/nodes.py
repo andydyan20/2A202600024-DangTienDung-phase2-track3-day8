@@ -78,8 +78,8 @@ def classify_node(state: AgentState) -> dict:
     # ── TOOL (lookups, status checks, data retrieval) ──
     elif any(kw in query for kw in ("status", "order", "lookup", "fetch", "find", "search", "check")):
         route = Route.TOOL
-    # ── MISSING_INFO (very short or vague queries) ──
-    elif len(clean_words) < 5 and (any(kw in clean_words for kw in ("it", "fix", "issue", "problem", "help", "broken", "thing", "something"))):
+    # ── MISSING_INFO (short or vague queries, ≤ 5 words with vague keywords) ──
+    elif len(clean_words) <= 5 and (any(kw in clean_words for kw in ("it", "fix", "issue", "problem", "help", "broken", "thing", "something"))):
         route = Route.MISSING_INFO
 
     return {
@@ -121,12 +121,16 @@ def tool_node(state: AgentState) -> dict:
     """
     scenario_id = state.get("scenario_id", "unknown")
     attempt = int(state.get("attempt", 0))
+    max_attempts = int(state.get("max_attempts", 3))
     idempotency_key = f"{scenario_id}:{attempt}"
 
-    # Simulate transient failures for error-route scenarios.
-    # Fails for attempts 0-1, succeeds at attempt 2+.
-    # Dead-letter triggers when max_attempts <= 2 because the tool never succeeds.
-    if state.get("route") == Route.ERROR.value and attempt < 2:
+    # Simulate transient failures proportional to the retry budget.
+    # Only fail when scenario.should_retry is True (error-route scenarios).
+    # Fails for ~2/3 of max_attempts, succeeds in the final third.
+    # Dead-letter triggers when max_attempts <= 2 (tool never succeeds).
+    should_retry = state.get("should_retry", False)
+    fail_until = max(2, max_attempts * 2 // 3)
+    if should_retry and state.get("route") == Route.ERROR.value and attempt < fail_until:
         result = {
             "status": "error",
             "data": None,

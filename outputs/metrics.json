@@ -1,8 +1,8 @@
 {
   "total_scenarios": 18,
   "success_rate": 1.0,
-  "avg_nodes_visited": 6.666666666666667,
-  "total_retries": 12,
+  "avg_nodes_visited": 6.833333333333333,
+  "total_retries": 13,
   "total_interrupts": 4,
   "resume_success": false,
   "scenario_metrics": [
@@ -159,15 +159,16 @@
       "success": true,
       "expected_route": "error",
       "actual_route": "error",
-      "nodes_visited": 10,
-      "retry_count": 2,
+      "nodes_visited": 13,
+      "retry_count": 3,
       "interrupt_count": 0,
       "approval_required": false,
       "approval_observed": false,
       "latency_ms": 0,
       "errors": [
         "transient failure attempt=1, backoff=2s",
-        "transient failure attempt=2, backoff=4s"
+        "transient failure attempt=2, backoff=4s",
+        "transient failure attempt=3, backoff=8s"
       ]
     },
     {

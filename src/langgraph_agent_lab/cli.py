@@ -70,5 +70,49 @@ def run_extensions(
     typer.echo(f"Extensions complete. Results → {output_path}")
 
 
+@app.command("run-custom")
+def run_custom(
+    scenarios: Annotated[
+        Path,
+        typer.Option("--scenarios", help="Path to custom scenarios JSONL"),
+    ] = Path("data/custom/scenarios.jsonl"),
+    checkpointer_kind: Annotated[
+        str, typer.Option("--checkpointer", help="Checkpointer kind")
+    ] = "memory",
+) -> None:
+    """Run custom (non-grading) scenarios from a separate JSONL file.
+
+    Use this to test new scenarios without affecting grading metrics.
+    Write results to outputs/custom_metrics.json.
+    """
+    custom_scenarios = load_scenarios(scenarios)
+    checkpointer = build_checkpointer(checkpointer_kind)
+    graph = build_graph(checkpointer=checkpointer)
+    metrics = []
+    for scenario in custom_scenarios:
+        state = initial_state(scenario)
+        run_config = {"configurable": {"thread_id": state["thread_id"]}}
+        final_state = graph.invoke(state, config=run_config)
+        metrics.append(metric_from_state(
+            final_state, scenario.expected_route.value, scenario.requires_approval,
+        ))
+    report = summarize_metrics(metrics)
+    output_path = Path("outputs/custom_metrics.json")
+    write_metrics(report, output_path)
+    typer.echo(f"Custom scenarios done. {report.total_scenarios} run, "
+               f"success_rate={report.success_rate:.0%} → {output_path}")
+
+
+@app.command("hitl")
+def hitl_ui() -> None:
+    """Launch the Streamlit HITL approval dashboard."""
+    import subprocess
+    import sys
+
+    ui_path = Path(__file__).resolve().parent / "hitl_ui.py"
+    typer.echo(f"Launching HITL dashboard: {ui_path}")
+    subprocess.run([sys.executable, "-m", "streamlit", "run", str(ui_path)], check=False)
+
+
 if __name__ == "__main__":
     app()

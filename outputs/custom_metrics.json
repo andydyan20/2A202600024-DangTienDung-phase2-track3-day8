@@ -1,0 +1,91 @@
+{
+  "total_scenarios": 6,
+  "success_rate": 1.0,
+  "avg_nodes_visited": 7.0,
+  "total_retries": 2,
+  "total_interrupts": 2,
+  "resume_success": false,
+  "scenario_metrics": [
+    {
+      "scenario_id": "C01_custom_refund",
+      "success": true,
+      "expected_route": "risky",
+      "actual_route": "risky",
+      "nodes_visited": 8,
+      "retry_count": 0,
+      "interrupt_count": 1,
+      "approval_required": true,
+      "approval_observed": true,
+      "latency_ms": 0,
+      "errors": []
+    },
+    {
+      "scenario_id": "C02_custom_lookup",
+      "success": true,
+      "expected_route": "tool",
+      "actual_route": "tool",
+      "nodes_visited": 6,
+      "retry_count": 0,
+      "interrupt_count": 0,
+      "approval_required": false,
+      "approval_observed": false,
+      "latency_ms": 0,
+      "errors": []
+    },
+    {
+      "scenario_id": "C03_custom_error",
+      "success": true,
+      "expected_route": "error",
+      "actual_route": "error",
+      "nodes_visited": 10,
+      "retry_count": 2,
+      "interrupt_count": 0,
+      "approval_required": false,
+      "approval_observed": false,
+      "latency_ms": 0,
+      "errors": [
+        "transient failure attempt=1, backoff=2s",
+        "transient failure attempt=2, backoff=4s"
+      ]
+    },
+    {
+      "scenario_id": "C04_custom_delete",
+      "success": true,
+      "expected_route": "risky",
+      "actual_route": "risky",
+      "nodes_visited": 8,
+      "retry_count": 0,
+      "interrupt_count": 1,
+      "approval_required": true,
+      "approval_observed": true,
+      "latency_ms": 0,
+      "errors": []
+    },
+    {
+      "scenario_id": "C05_custom_vague",
+      "success": true,
+      "expected_route": "missing_info",
+      "actual_route": "missing_info",
+      "nodes_visited": 4,
+      "retry_count": 0,
+      "interrupt_count": 0,
+      "approval_required": false,
+      "approval_observed": false,
+      "latency_ms": 0,
+      "errors": []
+    },
+    {
+      "scenario_id": "C06_custom_bulk",
+      "success": true,
+      "expected_route": "tool",
+      "actual_route": "tool",
+      "nodes_visited": 6,
+      "retry_count": 0,
+      "interrupt_count": 0,
+      "approval_required": false,
+      "approval_observed": false,
+      "latency_ms": 0,
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{"id":"C01_custom_refund","query":"Please refund order #98765 and notify the warehouse","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["custom","hitl","refund"]}
+{"id":"C02_custom_lookup","query":"Find all transactions for customer ID CUST-5551","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["custom","tool"]}
+{"id":"C03_custom_error","query":"Connection pool exhausted on reporting database","expected_route":"error","requires_approval":false,"should_retry":true,"max_attempts":4,"tags":["custom","retry"]}
+{"id":"C04_custom_delete","query":"Permanently delete user profile and all associated data for GDPR compliance","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["custom","hitl","gdpr","destructive"]}
+{"id":"C05_custom_vague","query":"Something is broken again","expected_route":"missing_info","requires_approval":false,"should_retry":false,"tags":["custom","clarification"]}
+{"id":"C06_custom_bulk","query":"Lookup order status for orders 11111, 22222, 33333, 44444, 55555","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["custom","tool","bulk"]}

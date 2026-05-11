@@ -15,7 +15,7 @@
 | S09_urgent | simple | simple | ✅ | 0 | 0 |
 | S10_bulk_order | tool | tool | ✅ | 0 | 0 |
 | S11_cancel | risky | risky | ✅ | 0 | 1 |
-| S12_persistent_error | error | error | ✅ | 2 | 0 |
+| S12_persistent_error | error | error | ✅ | 3 | 0 |
 | S13_vague_missing | missing_info | missing_info | ✅ | 0 | 0 |
 | S14_delete_data | risky | risky | ✅ | 0 | 1 |
 | S15_service_down | error | error | ✅ | 2 | 0 |
@@ -27,8 +27,8 @@
 
 - **Total scenarios:** 18
 - **Success rate:** 100.00%
-- **Average nodes visited:** 6.67
-- **Total retries:** 12
+- **Average nodes visited:** 6.83
+- **Total retries:** 13
 - **Total interrupts:** 4
 
 ---
